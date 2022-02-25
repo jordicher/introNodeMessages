@@ -4,8 +4,9 @@ const response = require('../../network/response');
 const controller = require('./controller');
 
 router.get('/', (req, res) => {
+  const filterMessages = req.query.user || null;
   controller
-    .getMessages()
+    .getMessages(filterMessages)
     .then((messageList) => response.success(req, res, messageList, 200))
     .catch((err) =>
       response.error(req, res, 'Error en el controlador', 500, err),

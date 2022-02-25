@@ -18,7 +18,11 @@ function addMessage(message) {
   newMessage.save();
 }
 
-async function getMessages() {
+async function getMessages(filterUser) {
+  if (filterUser) {
+    return Model.find({ user: new RegExp(filterUser, 'i') }); //regex perque li doni igual minuscules o mayuscules
+  }
+
   const messages = await Model.find();
   return messages;
 }
