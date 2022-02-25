@@ -23,7 +23,18 @@ async function getMessages() {
   return messages;
 }
 
+async function updateText(id, message) {
+  const updateMessage = await Model.findOneAndUpdate(
+    { _id: id },
+    { message },
+    { new: true }, //retorna el valor actualitzar
+  );
+
+  return updateMessage;
+}
+
 module.exports = {
   add: addMessage,
   get: getMessages,
+  updateText: updateText,
 };

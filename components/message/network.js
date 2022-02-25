@@ -15,7 +15,16 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
   controller
     .addMessage(req.body.user, req.body.message)
-    .then(() => response.success(req, res, 'Created', 201))
+    .then((fullMessage) => response.success(req, res, fullMessage, 201))
+    .catch((err) =>
+      response.error(req, res, 'Error en el controlador', 500, err),
+    );
+});
+
+router.patch('/:id', async (req, res) => {
+  controller
+    .updateMessage(req.params.id, req.body.message)
+    .then((data) => response.success(req, res, data, 200))
     .catch((err) =>
       response.error(req, res, 'Error en el controlador', 500, err),
     );
