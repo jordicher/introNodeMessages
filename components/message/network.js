@@ -31,6 +31,15 @@ router.patch('/:id', async (req, res) => {
     );
 });
 
-//podem possar el status
+router.delete('/:id', async (req, res) => {
+  controller
+    .deleteMessage(req.params.id, req.body.message)
+    .then((data) =>
+      response.success(req, res, `Usuario ${req.params.id} eliminado`, 200),
+    )
+    .catch((err) =>
+      response.error(req, res, 'Error en el controlador', 500, err),
+    );
+});
 
 module.exports = router; //exportem el router, les dos rutes

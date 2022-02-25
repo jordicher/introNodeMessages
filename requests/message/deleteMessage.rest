@@ -1,0 +1,1 @@
+DELETE http://localhost:8080/message/62195f64bb072aab47f31286
