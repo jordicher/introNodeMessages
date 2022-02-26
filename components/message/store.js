@@ -6,12 +6,18 @@ function addMessage(message) {
 }
 
 async function getMessages(filterUser) {
-  if (filterUser) {
-    return Model.find({ user: new RegExp(filterUser, 'i') }); //regex perque li doni igual minuscules o mayuscules
-  }
+  return new Promise((resolve, reject) => {
+    let filter = {};
+    if (filterUser) {
+      filter = { user: new RegExp(filterUser, 'i') };
+      //regex perque li doni igual minuscules o mayuscules
+    }
 
-  const messages = await Model.find();
-  return messages;
+    const messages = Model.find(filter)
+      .populate('user') //torna els camps de la taula de la relacio
+      .catch((err) => reject(err));
+    resolve(messages);
+  });
 }
 
 async function updateText(id, message) {
