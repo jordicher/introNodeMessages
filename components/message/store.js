@@ -1,44 +1,49 @@
 const Model = require('./model');
 
 function addMessage(message) {
-  const newMessage = new Model(message);
-  newMessage.save();
+  const myMessage = new Model(message);
+  myMessage.save();
 }
 
-async function getMessages(filterUser) {
+async function getMessages(filterChat) {
   return new Promise((resolve, reject) => {
     let filter = {};
-    if (filterUser) {
-      filter = { user: new RegExp(filterUser, 'i') };
-      //regex perque li doni igual minuscules o mayuscules
+    if (filterChat !== null) {
+      filter = { chat: filterChat };
     }
+    Model.find(filter)
+      .populate('user')
+      .exec((error, populated) => {
+        if (error) {
+          reject(error);
+          return false;
+        }
 
-    const messages = Model.find(filter)
-      .populate('user') //torna els camps de la taula de la relacio
-      .catch((err) => reject(err));
-    resolve(messages);
+        resolve(populated);
+      });
+  });
+}
+
+function removeMessage(id) {
+  return Model.deleteOne({
+    _id: id,
   });
 }
 
 async function updateText(id, message) {
-  const updateMessage = await Model.findOneAndUpdate(
-    { _id: id },
-    { message },
-    { new: true }, //retorna el valor actualitzar
-  );
+  const foundMessage = await Model.findOne({
+    _id: id,
+  });
 
-  return updateMessage;
-}
+  foundMessage.message = message;
 
-function deleteMessage(id) {
-  const updateMessage = Model.deleteOne({ _id: id });
-
-  return updateMessage;
+  const newMessage = await foundMessage.save();
+  return newMessage;
 }
 
 module.exports = {
   add: addMessage,
-  get: getMessages,
+  list: getMessages,
   updateText: updateText,
-  delete: deleteMessage,
+  remove: removeMessage,
 };

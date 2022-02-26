@@ -3,5 +3,6 @@ content-type: application/json
 
 {
   "user": "621a9244ac6be9bdbcfd5350",
-  "message": "Adeu"
+  "message": "Adeu",
+  "chat": "621a9b80faf5f8ab3f4655fa"
 }

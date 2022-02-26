@@ -1,0 +1,2 @@
+GET http://localhost:8080/chat/621a92a4e368db7d01cf00b8
+

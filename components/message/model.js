@@ -3,9 +3,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const mySchema = new Schema({
+  chat: {
+    type: Schema.ObjectId,
+    ref: 'Chat',
+  },
   user: {
-    //que esperem rebre com a usuari, es el id de un usuari
-    type: Schema.Types.ObjectId,
+    type: Schema.ObjectId,
     ref: 'User',
   },
   message: {
@@ -13,8 +16,8 @@ const mySchema = new Schema({
     required: true,
   },
   date: Date,
+  file: String,
 });
 
-const model = mongoose.model('Message', mySchema); //seria com el nom de la taula a una taula sql
-
+const model = mongoose.model('Message', mySchema);
 module.exports = model;

@@ -1,0 +1,17 @@
+POST http://localhost:8080/chat HTTP/1.1
+content-type: application/json
+
+{
+  "users": [
+      {
+      "_id": "621a92a4e368db7d01cf00b8",
+      "name": "Lucas",
+      "__v": 0
+    },
+    {
+      "_id": "621a92c6ac05b187533e76e5",
+      "name": "Lucas",
+      "__v": 0
+    }
+  ]
+}
